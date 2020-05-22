@@ -247,7 +247,14 @@ public class ServletUtils {
      */
     public Map jsonMap() throws ServletException, IOException {
         checkJsonContentType();
-        return JsonHelper.toMap(Util.read(request.getInputStream()));
+        Map map = JsonHelper.toMap(Util.read(request.getInputStream()));
+        
+        //agrego ID como parámetro, si está presente en la URL.
+        if(getId() != null) {
+            map.put("id", this.getId().toString());
+        }
+        
+        return map;
     }
 
     /**
